@@ -9,7 +9,7 @@ class MenuVoluntario:
         self.voluntario = Voluntario.iniciar_sesion(usuario)
         self.opcion = 0
 
-    def imprimirMenu(self):
+    def imprimir_menu(self):
         opciones = {1: self.opcion1, 2: self.opcion2, 3: self.opcion3, 4: self.opcion4, 5: self.opcion5}
 
         while self.opcion != '6':

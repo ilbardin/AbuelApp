@@ -11,7 +11,7 @@ class MenuPrincipal:
     def __init__(self):
         self.opcion = 0
 
-    def imprimirMenu(self):
+    def imprimir_menu(self):
 
         opciones = {1: self.opcion1, 2: self.opcion2, 3: self.opcion3}
 
@@ -46,8 +46,8 @@ class MenuPrincipal:
             usuario = input('\nIngrese su usuario: ')
             contra = getpass.getpass('\nIngrese su contraseña: ')
             if Abuelo.verificar_login(usuario, contra):
-                menuAbuelo = menu_abuelo_UI.MenuAbuelo(usuario)
-                menuAbuelo.imprimirMenu()
+                menu_abuelo = menu_abuelo_UI.MenuAbuelo(usuario)
+                menu_abuelo.imprimir_menu()
             else:
                 os.system('clear')
                 print('Usuario o contraseña incorrecta.')
@@ -60,8 +60,8 @@ class MenuPrincipal:
             usuario = input('\nIngrese su usuario: ')
             contra = getpass.getpass('\nIngrese su contraseña: ')
             if Voluntario.verificar_login(usuario, contra):
-                menuVoluntario = menu_voluntario_UI.MenuVoluntario(usuario)
-                menuVoluntario.imprimirMenu()
+                menu_voluntario = menu_voluntario_UI.MenuVoluntario(usuario)
+                menu_voluntario.imprimir_menu()
             else:
                 os.system('clear')
                 print('Usuario o contraseña incorrecta.')
@@ -86,19 +86,19 @@ class MenuPrincipal:
         resp = input('\nSeleccione opción: ')
         # MEDIANTE UNA LISTA RETORNADA CREA UN OBJETO Y SUBE LOS DATOS A LA BASE DE DATOS
         if resp == '1':
-            lista = abuelo_UI.Registro()
+            lista = abuelo_UI.registro()
             abuelo = Abuelo(lista[0], lista[1], lista[2], lista[3], lista[4], lista[5], lista[6])
             abuelo.resgistrarse()
             abuelo = None
-            menuAbuelo = menu_abuelo_UI.MenuAbuelo(lista[0])
-            menuAbuelo.imprimirMenu()
+            menu_abuelo = menu_abuelo_UI.MenuAbuelo(lista[0])
+            menu_abuelo.imprimir_menu()
         elif resp == '2':
             lista = voluntario_UI.Registro()
             voluntario = Voluntario(lista[0], lista[1], lista[2], lista[3], lista[4], lista[5], lista[6])
             voluntario.resgistrarse()
             voluntario = None
-            menuVoluntario = menu_voluntario_UI.MenuVoluntario(lista[0])
-            menuVoluntario.imprimirMenu()
+            menu_voluntario = menu_voluntario_UI.MenuVoluntario(lista[0])
+            menu_voluntario.imprimir_menu()
         elif resp == '3':
             pass
         else:

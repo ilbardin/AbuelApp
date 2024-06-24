@@ -9,7 +9,7 @@ class MenuAbuelo:
         self.abuelo = Abuelo.iniciar_sesion(usuario)
         self.opcion = 0
 
-    def imprimirMenu(self):
+    def imprimir_menu(self):
         opciones = {1: self.opcion1, 2: self.opcion2, 3: self.opcion3, 4: self.opcion4}
 
         while self.opcion != '5':
@@ -29,15 +29,15 @@ class MenuAbuelo:
                     function()
 
     def opcion1(self):
-        abuelo_UI.verMiPerfil(self.abuelo)
+        abuelo_UI.ver_mi_perfil(self.abuelo)
 
     def opcion2(self):
-        abuelo_UI.modificarPerfil(self.abuelo)
+        abuelo_UI.modificar_perfil(self.abuelo)
 
     def opcion3(self):
-        abuelo_UI.solicitarAyuda(self.abuelo)
+        abuelo_UI.solicitar_ayuda(self.abuelo)
 
     def opcion4(self):
-        elim = abuelo_UI.eliminarUsuario(self.abuelo)
+        elim = abuelo_UI.eliminar_usuario(self.abuelo)
         if elim:
             self.opcion = '5'

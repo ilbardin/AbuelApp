@@ -1,4 +1,4 @@
-from BACK_END.voluntario import Voluntario  # IMPORT DE LA CLASE VOLUNTARIO
+from BACK_END.voluntario import Voluntario
 from UI import funciones
 import os
 import time
@@ -7,12 +7,13 @@ import time
 # PIDE LOS DATOS PARA EL REGISTRO Y LO RETORNA EN UNA LISTA
 def Registro():
     usr = funciones.verificar_usuario()
-    if Voluntario.verificar_usuarioDisponible(usr):
-        contra = funciones.ingresoContra()
-        nombre = funciones.verificar_nombreApellido('nombre')
-        apellido = funciones.verificar_nombreApellido('apellido')
+
+    if Voluntario.verificar_usuario_disponible(usr):
+        contra = funciones.ingreso_password()
+        nombre = funciones.verificar_nombre_apellido('nombre')
+        apellido = funciones.verificar_nombre_apellido('apellido')
         celular = funciones.verificar_celular()
-        direccion = funciones.verificarDireccion()
+        direccion = funciones.verificar_direccion()
         sexo = funciones.elegir_sexo()
     else:
         os.system('clear')
@@ -26,7 +27,7 @@ def Registro():
 # VE LOS DATOS DEL VOLUNTARIO
 def verMiPerfil(voluntario):
     print('Sus datos son los siguientes:\n')
-    voluntario.mostrarDatos()
+    voluntario.mostrar_datos()
     input('\nOprima cualquier tecla para continuar...')
 
 
@@ -45,41 +46,41 @@ def modificarPerfil(voluntario):
         )
         resp = input()
         if resp == '1':
-            nombre = funciones.verificar_nombreApellido('Nombre')
+            nombre = funciones.verificar_nombre_apellido('Nombre')
             os.system('clear')
-            if funciones.menuConfirmacion('¿Seguro quiere modificar su nombre?'):
+            if funciones.menu_confirmacion('¿Seguro quiere modificar su nombre?'):
                 voluntario.nombre = nombre
                 voluntario.guardar_cambios()
         elif resp == '2':
-            apellido = funciones.verificar_nombreApellido('Apellido')
+            apellido = funciones.verificar_nombre_apellido('Apellido')
             os.system('clear')
-            if funciones.menuConfirmacion('¿Seguro quiere modificar su apellido?'):
+            if funciones.menu_confirmacion('¿Seguro quiere modificar su apellido?'):
                 voluntario.apellido = apellido
                 voluntario.guardar_cambios()
         elif resp == '3':
             celular = funciones.verificar_celular()
             os.system('clear')
-            if funciones.menuConfirmacion('¿Seguro quiere modificar su celular?'):
+            if funciones.menu_confirmacion('¿Seguro quiere modificar su celular?'):
                 voluntario.celular = celular
                 voluntario.guardar_cambios()
         elif resp == '4':
-            direccion = funciones.verificarDireccion()
+            direccion = funciones.verificar_direccion()
             os.system('clear')
-            if funciones.menuConfirmacion('¿Seguro quiere modificar su dirección?'):
+            if funciones.menu_confirmacion('¿Seguro quiere modificar su dirección?'):
                 voluntario.direccion = direccion
                 voluntario.guardar_cambios()
 
 
 # RECARGA VERIFICANDO SI ALGUN ABUELO LE HA SOLICITADO AYUDA
 def recargar(voluntario):
-    voluntario.actualizarNotificacion()
-    voluntario.ayudaCompletadaORechazada()
+    voluntario.actualizar_notificacion()
+    voluntario.ayuda_completada_o_rechazada()
     input('\nOprima cualquiera tecla para continuar...')
 
 
 # ELIMINA EL USUARIO DE LA BASE DE DATOS
 def eliminarUsuario(voluntario):
-    if funciones.menuConfirmacion('¿Seguro que quiere eliminar su cuenta?'):
+    if funciones.menu_confirmacion('¿Seguro que quiere eliminar su cuenta?'):
         voluntario.eliminarme()
         return True
     else:
@@ -88,7 +89,7 @@ def eliminarUsuario(voluntario):
 
 # MUESTRA POR PANTALLA SI ESTA DISPONIBLE
 def mensajeDisponibilidad(voluntario):
-    if voluntario.mostrarDisponibilidad() == 'Disponible':
+    if voluntario.mostrar_disponibilidad() == 'Disponible':
         return '*Su estado es: Disponible. Podria recibir peticiones de ayuda.'
     else:
         return '*Su estado es: No disponible. Cambielo si quiere recibir peticiones de ayuda'
@@ -96,6 +97,6 @@ def mensajeDisponibilidad(voluntario):
 
 # CAMBIA LA DISPONIBILIDAD DEL USUARIO
 def cambiarDisponibilidad(voluntario):
-    voluntario.cambiarDisponibilidad()
-    print(f'Su disponibilidad cambio a: {voluntario.mostrarDisponibilidad()}')
+    voluntario.cambiar_disponibilidad()
+    print(f'Su disponibilidad cambio a: {voluntario.mostrar_disponibilidad()}')
     input('Oprima cualquier tecla para continuar...')

@@ -6,7 +6,7 @@ class Voluntario:
 
     def __init__(self, usuario, contra, nombre, apellido, celular, direccion, sexo):
         self.usuario = usuario
-        contra = funciones.hashearContra(contra)
+        contra = funciones.hashear_password(contra)
         contra = contra.decode('utf-8')
         self.contra = contra
         self.nombre = nombre
@@ -21,8 +21,9 @@ class Voluntario:
     def iniciar_sesion(usuario):
         try:
             dao = DAO()
-            sql = f'select contra, nombre, apellido, celular, direccion, sexo, disponibilidad from voluntario where usuario=\'{usuario}\';'
-            lista = dao.recuperarRegistro(sql)
+            sql = (f'select contra, nombre, apellido, celular, direccion, sexo, disponibilidad from voluntario'
+                   f' where usuario=\'{usuario}\';')
+            lista = dao.recuperar_registro(sql)
             contra = bytes((lista[0]))
             contra = contra.decode('utf-8')
             return Voluntario(usuario, contra, lista[1], lista[2], lista[3], lista[4], lista[5])
@@ -33,10 +34,12 @@ class Voluntario:
         # noinspection PyBroadException
         try:
             dao = DAO()
-            sql = "INSERT INTO voluntario (usuario, contra, nombre, apellido, celular, direccion, sexo, disponibilidad) VALUES ('{0}',\"{1}\",'{2}','{3}','{4}','{5}','{6}','0');"
+            sql = ("INSERT INTO voluntario ("
+                   "usuario, contra, nombre, apellido, celular, direccion, sexo, disponibilidad)"
+                   " VALUES ('{0}',\"{1}\",'{2}','{3}','{4}','{5}','{6}','0');")
             sql = sql.format(self.usuario, self.contra, self.nombre, self.apellido, self.celular, self.direccion,
                              self.sexo)
-            dao.insertarOActualizar(sql)
+            dao.insertar_o_actualizar(sql)
         except Exception as e:
             print(e)
 
@@ -44,36 +47,37 @@ class Voluntario:
         # noinspection PyBroadException
         try:
             dao = DAO()
-            sql = "UPDATE voluntario SET nombre = '{0}', apellido = '{1}', celular = '{2}', direccion = '{3}', sexo = '{4}' WHERE usuario = '{5}';"
+            sql = ("UPDATE voluntario SET nombre ="
+                   " '{0}', apellido = '{1}', celular = '{2}', direccion = '{3}', sexo = '{4}' WHERE usuario = '{5}';")
             sql = sql.format(self.nombre, self.apellido, self.celular, self.direccion, self.sexo, self.usuario)
-            dao.insertarOActualizar(sql)
+            dao.insertar_o_actualizar(sql)
         except Exception as e:
             print(e)
 
-    def cambiarDisponibilidad(self):
+    def cambiar_disponibilidad(self):
         # noinspection PyBroadException
         try:
             dao = DAO()
-            disp = dao.recuperarRegistro(f"select disponibilidad from voluntario where usuario = '{self.usuario}';")
+            disp = dao.recuperar_registro(f"select disponibilidad from voluntario where usuario = '{self.usuario}';")
             if disp[0] == 0:
                 sql = f"UPDATE voluntario SET disponibilidad = 1 WHERE usuario = '{self.usuario}';"
             else:
                 sql = f"UPDATE voluntario SET disponibilidad = 0 WHERE usuario = '{self.usuario}';"
-            dao.insertarOActualizar(sql)
+            dao.insertar_o_actualizar(sql)
         except Exception as e:
             print(e)
 
-    def mostrarDatos(self):
+    def mostrar_datos(self):
         print('Nombre:', self.nombre)
         print('Apellido:', self.apellido)
         print('Celular:', self.celular)
         print('Dirección:', self.direccion)
         print('Sexo:', self.sexo)
 
-    def mostrarDisponibilidad(self):
+    def mostrar_disponibilidad(self):
         try:
             dao = DAO()
-            disp = dao.recuperarRegistro(f"select disponibilidad from voluntario where usuario = '{self.usuario}';")
+            disp = dao.recuperar_registro(f"select disponibilidad from voluntario where usuario = '{self.usuario}';")
             if disp[0] == 0:
                 return 'No disponible'
             else:
@@ -86,16 +90,16 @@ class Voluntario:
             dao = DAO()
             sql = "DELETE FROM voluntario WHERE usuario = '{0}';"
             sql = sql.format(self.usuario)
-            dao.insertarOActualizar(sql)
+            dao.insertar_o_actualizar(sql)
         except Exception as e:
             print(e)
 
     @staticmethod
-    def mostrarDatosAbuelo(abuelo):
+    def mostrar_datos_abuelo(abuelo):
         try:
             dao = DAO()
             sql = f"SELECT nombre, apellido, celular FROM abuelo WHERE usuario = '{abuelo}';"
-            datos = dao.recuperarRegistro(sql)
+            datos = dao.recuperar_registro(sql)
             print(
                 'Datos del abuelo para que pueda comunicarse:\n'
                 'Nombre:', datos[0], '\n'
@@ -105,35 +109,35 @@ class Voluntario:
         except Exception as e:
             print(e)
 
-    def actualizarNotificacion(self):
+    def actualizar_notificacion(self):
         try:
             dao = DAO()
             resp = ''
             sql = f"SELECT peticionAyuda FROM voluntario WHERE usuario = '{self.usuario}';"
-            peticion = dao.recuperarRegistro(sql)
+            peticion = dao.recuperar_registro(sql)
             if peticion[0] is not None:
                 print(f'El usuario {peticion[0]} solicita su ayuda')
                 print('Opcion 1:\tAceptar\nOpcion 2:\tRechazar')
                 resp = input()
                 if resp == '1':
-                    self.mostrarDatosAbuelo(peticion[0])
-                    dao.insertarOActualizar(
+                    self.mostrar_datos_abuelo(peticion[0])
+                    dao.insertar_o_actualizar(
                         f'UPDATE abuelo SET ayudante = \'{self.usuario}\' WHERE usuario = \'{peticion[0]}\';')
                 elif resp == '2':
-                    dao.insertarOActualizar(f'UPDATE abuelo SET ayudante = \'0\' WHERE usuario = \'{peticion[0]}\';')
+                    dao.insertar_o_actualizar(f'UPDATE abuelo SET ayudante = \'0\' WHERE usuario = \'{peticion[0]}\';')
             else:
                 print('No tiene ninguna petición de ayuda.')
         except Exception as e:
             print(e)
 
     # UNA VEZ COMPLETADA LA ACCION DE LA AYUDA, LIMPIA LA PETICION DE AYUDA
-    def ayudaCompletadaORechazada(self):
+    def ayuda_completada_o_rechazada(self):
         try:
             dato = 'NULL'
             dao = DAO()
             sql = "UPDATE voluntario SET peticionAyuda = {0} WHERE usuario = '{1}';"
             sql = sql.format(str(dato), self.usuario)
-            dao.insertarOActualizar(sql)
+            dao.insertar_o_actualizar(sql)
         except Exception as e:
             print(e)
 
@@ -142,19 +146,19 @@ class Voluntario:
         try:
             dao = DAO()
             sql = f"SELECT contra FROM voluntario WHERE usuario='{usuario}';"
-            contraRecuperada = dao.recuperarRegistro(sql)
-            contraMysql = bytes((contraRecuperada[0]))
-            return funciones.verificarContra(contra, contraMysql)
+            contra_recuperada = dao.recuperar_registro(sql)
+            contra_mysql = bytes((contra_recuperada[0]))
+            return funciones.verificar_contra(contra, contra_mysql)
         except Exception as e:
             print(e)
             pass
 
     @staticmethod
-    def verificar_usuarioDisponible(usuario):
+    def verificar_usuario_disponible(usuario):
         try:
             dao = DAO()
             sql = "SELECT usuario FROM voluntario;"
-            lista_usr = dao.recuperarRegistro(sql)
+            lista_usr = dao.recuperar_registro(sql)
             verif = True
             if lista_usr is not None:
                 for usr in lista_usr:
@@ -166,11 +170,11 @@ class Voluntario:
             print(e)
 
     @staticmethod
-    def lista_voluntariosDisponibles():
+    def lista_voluntarios_disponibles():
         try:
             dao = DAO()
             sql = "SELECT usuario, direccion FROM voluntario WHERE disponibilidad = 1;"
-            lista = dao.recuperarLista(sql)
+            lista = dao.recuperar_lista(sql)
             return lista
         except Exception as e:
             print(e)

@@ -2,9 +2,7 @@
 
 Proyecto realizado para la materia Metodología de la Investigación, de la carrera Tecnicatura Universitaria en Programación en la facultad Universidad Tecnológica Nacional - Facultad Regional Mendoza.
 
-Escrito en colaboración con mi colega Juan José Gabriel Fredes.
-
-¿Qué es AbuelApp?
+¿Qué es AbuelApp?<br><br>
   Es una aplicación que consiste de un sistema de gestión de voluntarios para asistir a personas mayores en contexto de cuarentena.
 	El sistema permite la carga de datos y registro de voluntarios y de abuelos que necesiten ayuda con diversos problemas o tareas, y, a través del algoritmo del programa, hace un "match" entre voluntario y abuelo para poder acordar fechas, horarios y precauciones a tener en cuenta para la asistencia.
   

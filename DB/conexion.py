@@ -16,8 +16,9 @@ class DAO:
         except Error as ex:
             print("Error al intentar conexión: {0}", format(ex))
 
-    def recuperarLista(self, sentencia):
-        if not self.conexion.is_connected(): self.__init__()
+    def recuperar_lista(self, sentencia):
+        if not self.conexion.is_connected():
+            self.__init__()
         try:
             cursor = self.conexion.cursor()
             cursor.execute(sentencia)
@@ -29,8 +30,9 @@ class DAO:
             if self.conexion.is_connected():
                 self.conexion.close()
 
-    def recuperarRegistro(self, sentencia):
-        if not self.conexion.is_connected(): self.__init__()
+    def recuperar_registro(self, sentencia):
+        if not self.conexion.is_connected():
+            self.__init__()
         try:
             cursor = self.conexion.cursor()
             cursor.execute(sentencia)
@@ -42,8 +44,9 @@ class DAO:
             if self.conexion.is_connected():
                 self.conexion.close()
 
-    def insertarOActualizar(self, sentencia):
-        if not self.conexion.is_connected(): self.__init__()
+    def insertar_o_actualizar(self, sentencia):
+        if not self.conexion.is_connected():
+            self.__init__()
         try:
             cursor = self.conexion.cursor()
             cursor.execute(sentencia)

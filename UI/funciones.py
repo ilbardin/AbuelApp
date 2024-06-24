@@ -7,7 +7,7 @@ import time
 
 
 # CONFIRMA EL MENSAJE PASADO POR PARAMETRO
-def menuConfirmacion(mensaje):
+def menu_confirmacion(mensaje):
     opcion = input(mensaje + "\nPresione '1' para confirmar u otra tecla para cancelar.\n")
 
     if opcion == '1':
@@ -20,7 +20,7 @@ def menuConfirmacion(mensaje):
 
 
 # VERIFICA EL NOMBRE O APELLIDO
-def verificar_nombreApellido(nombre_apellido):
+def verificar_nombre_apellido(nombre_apellido):
     ok = False
     while not ok:
         os.system('clear')
@@ -31,22 +31,22 @@ def verificar_nombreApellido(nombre_apellido):
             os.system('clear')
             print("{} demasiado corto o largo. Intente de nuevo".format(nombre_apellido).title())
             time.sleep(1)
-            return verificar_nombreApellido(nombre_apellido)
+            return verificar_nombre_apellido(nombre_apellido)
 
         # VERIFICAR QUE NO CONTENGA ESPACIOS VACIOS
         if nombre.isspace():
             os.system('clear')
             print("El {} no puede contener espacios vacíos. Intente de nuevo.".format(nombre_apellido).title())
             time.sleep(1)
-            return verificar_nombreApellido(nombre_apellido)
+            return verificar_nombre_apellido(nombre_apellido)
 
         os.system('clear')
         print("Usted ha ingresado ", nombre)
 
-        if menuConfirmacion("¿Es correcto el nombre ingresado?"):
+        if menu_confirmacion("¿Es correcto el nombre ingresado?"):
             return nombre
         else:
-            return verificar_nombreApellido(nombre_apellido)
+            return verificar_nombre_apellido(nombre_apellido)
 
 
 # DA OPCIONES PARA QUE EL USUARIO ELIJA EL SEXO
@@ -70,7 +70,7 @@ def elegir_sexo():
             os.system('clear')
             print("El sexo elegido es:", sexo)
 
-            if menuConfirmacion("¿Es correcto el sexo ingresado?"):
+            if menu_confirmacion("¿Es correcto el sexo ingresado?"):
                 return sexo
             else:
                 return elegir_sexo()
@@ -91,7 +91,7 @@ def verificar_usuario():
     else:
         os.system('clear')
         print('El usuario ingresado es: {}'.format(usr))
-        if menuConfirmacion('¿Quiere continuar con ese nombre de usuario?'):
+        if menu_confirmacion('¿Quiere continuar con ese nombre de usuario?'):
             return usr
         else:
             return verificar_usuario()
@@ -99,24 +99,24 @@ def verificar_usuario():
 
 # ESTA FORMULA CALCULA LA DISTANCIA ENTRE DOS PUNTOS DE LA TIERRA MEDIANTE LA LATITUD Y LONGITUD
 def haversine(latlon1, latlon2):
-    R = 6372.8  # RADIO DE LA TIERRA
+    r = 6372.8  # RADIO DE LA TIERRA
 
-    latD = radians(latlon2[0] - latlon1[0])
-    lonD = radians(latlon2[1] - latlon1[1])
+    lat_d = radians(latlon2[0] - latlon1[0])
+    lon_d = radians(latlon2[1] - latlon1[1])
 
     lat1 = radians(latlon1[0])
     lat2 = radians(latlon2[0])
 
-    a = sin(latD / 2) ** 2 + cos(lat1) * cos(lat2) * sin(lonD / 2) ** 2
+    a = sin(lat_d / 2) ** 2 + cos(lat1) * cos(lat2) * sin(lon_d / 2) ** 2
     c = 2 * atan2(sqrt(a), sqrt(1 - a))
 
-    d = R * c
+    d = r * c
 
     return d
 
 
 # RETORNA LA LATITUD Y LONGITUD DE LA DIRECCION INGRESADA
-def latitudLongitud(direccion):
+def latitud_longitud(direccion):
     geolocator = Nominatim(user_agent='AbuelApp')
     loc = geolocator.geocode(direccion)
     lista = [loc.latitude, loc.longitude]
@@ -124,32 +124,33 @@ def latitudLongitud(direccion):
 
 
 # VERIFICA QUE LA DIRECCION SEA CORRECTA
-def verificarDireccion():
+def verificar_direccion():
     # noinspection PyBroadException
     try:
         geolocator = Nominatim(user_agent='AbuelApp')
         os.system('clear')
         print(
-            '*Siga el siguiente formato: Calle y numero, Barrio (opcional), Localidad (opcional), Departamento, Provincia')
+            '*Siga el siguiente formato: Calle y numero, Barrio (opcional), Localidad (opcional), Departamento, '
+            'Provincia')
         direccion = input('Ingrese dirección: ')
         loc = geolocator.geocode(direccion)
         loc = loc.address
         os.system('clear')
         print('La dirección ingresada es: {}'.format(direccion))
-        if menuConfirmacion('¿Quiere continuar con esa dirección?'):
+        if menu_confirmacion('¿Quiere continuar con esa dirección?'):
             return direccion
         else:
-            return verificarDireccion()
+            return verificar_direccion()
     except Exception as e:
         os.system('clear')
         print(e)
         print('Dirección incorrecta. Verifique y vuelva a ingresarla.')
         time.sleep(1)
-        return verificarDireccion()
+        return verificar_direccion()
 
 
 # VERIFICA QUE LA CONTRASEÑA NO TENGA MENOS DE 8 CARACTERES
-def analizar_contra(contra):
+def analizar_password(contra):
     contra = str(contra)
     if contra.isspace() or len(contra) < 8:
         return False
@@ -158,23 +159,23 @@ def analizar_contra(contra):
 
 
 # PIDE LA CONTRASEÑA
-def ingresoContra():
+def ingreso_password():
     os.system('clear')
     contra = getpass.getpass('Ingrese una contraseña: ')
-    if analizar_contra(contra):
-        repeContra = getpass.getpass('\nVuela a ingresar la contraseña: ')
-        if contra == repeContra:
+    if analizar_password(contra):
+        repe_contra = getpass.getpass('\nVuela a ingresar la contraseña: ')
+        if contra == repe_contra:
             return contra
         else:
             os.system('clear')
             print('Las contraseñas no coinciden. Intente de nuevo.')
             time.sleep(1)
-            return ingresoContra()
+            return ingreso_password()
     else:
         os.system('clear')
         print('La contraseña no puede tener menos de 8 caracteres ni tener solo espacios vacios. Intente de nuevo.')
         time.sleep(2)
-        return ingresoContra()
+        return ingreso_password()
 
 
 # VERIFICA QUE EL CELULAR CONTENGA SOLO NUMEROS
@@ -184,7 +185,7 @@ def verificar_celular():
     if cel.isnumeric():
         os.system('clear')
         print('El celular ingresado es: {}'.format(cel))
-        if menuConfirmacion('¿Es correcto ese celular?'):
+        if menu_confirmacion('¿Es correcto ese celular?'):
             return cel
         else:
             return verificar_celular()
@@ -195,11 +196,11 @@ def verificar_celular():
         return verificar_celular()
 
 
-def hashearContra(contra):
-    contraHash = bcrypt.hashpw(contra.encode('utf-8'), bcrypt.gensalt())
-    return contraHash
+def hashear_password(contra):
+    contra_hash = bcrypt.hashpw(contra.encode('utf-8'), bcrypt.gensalt())
+    return contra_hash
 
 
-def verificarContra(contra, contraMysql):
-    verif = bcrypt.checkpw(contra.encode('utf-8'), contraMysql)
+def verificar_contra(contra, contra_mysql):
+    verif = bcrypt.checkpw(contra.encode('utf-8'), contra_mysql)
     return verif

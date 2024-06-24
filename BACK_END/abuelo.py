@@ -8,7 +8,7 @@ class Abuelo:
 
     def __init__(self, usuario, contra, nombre, apellido, celular, direccion, sexo):
         self.usuario = usuario
-        contra = funciones.hashearContra(contra)
+        contra = funciones.hashear_password(contra)
         contra = contra.decode('utf-8')
         self.contra = contra
         self.nombre = nombre
@@ -23,7 +23,7 @@ class Abuelo:
         try:
             dao = DAO()
             sql = f'select contra, nombre, apellido, celular, direccion, sexo from abuelo where usuario=\'{usuario}\';'
-            lista = dao.recuperarRegistro(sql)
+            lista = dao.recuperar_registro(sql)
             contra = bytes((lista[0]))
             contra = contra.decode('utf-8')
             return Abuelo(usuario, contra, lista[1], lista[2], lista[3], lista[4], lista[5])
@@ -35,10 +35,11 @@ class Abuelo:
         # noinspection PyBroadException
         try:
             dao = DAO()
-            sql = "INSERT INTO abuelo (usuario, contra, nombre, apellido, celular, direccion, sexo) VALUES ('{0}',\"{1}\",'{2}','{3}','{4}','{5}','{6}');"
+            sql = ("INSERT INTO abuelo (usuario, contra, nombre, apellido, celular, direccion, sexo)"
+                   " VALUES ('{0}',\"{1}\",'{2}','{3}','{4}','{5}','{6}');")
             sql = sql.format(self.usuario, self.contra, self.nombre, self.apellido, self.celular, self.direccion,
                              self.sexo)
-            dao.insertarOActualizar(sql)
+            dao.insertar_o_actualizar(sql)
         except Exception as e:
             print(e)
 
@@ -46,13 +47,14 @@ class Abuelo:
         # noinspection PyBroadException
         try:
             dao = DAO()
-            sql = "UPDATE abuelo SET nombre = '{0}', apellido = '{1}', celular = '{2}', direccion = '{3}', sexo = '{4}' WHERE usuario = '{5}';"
+            sql = ("UPDATE abuelo SET nombre = '{0}', apellido = '{1}', celular = '{2}', direccion = '{3}',"
+                   " sexo = '{4}' WHERE usuario = '{5}';")
             sql = sql.format(self.nombre, self.apellido, self.celular, self.direccion, self.sexo, self.usuario)
-            dao.insertarOActualizar(sql)
+            dao.insertar_o_actualizar(sql)
         except Exception as e:
             print(e)
 
-    def mostrarDatos(self):
+    def mostrar_datos(self):
         print('Nombre:', self.nombre)
         print('Apellido:', self.apellido)
         print('Celular:', self.celular)
@@ -64,33 +66,33 @@ class Abuelo:
             dao = DAO()
             sql = "DELETE FROM abuelo WHERE usuario = '{0}'"
             sql = sql.format(self.usuario)
-            dao.insertarOActualizar(sql)
+            dao.insertar_o_actualizar(sql)
         except Exception as e:
             print(e)
 
-    def lista_volutariosDisponibles(self):
-        miLatLong = funciones.latitudLongitud(self.direccion)
-        loc = Voluntario.lista_voluntariosDisponibles()
-        listaVolDisp = []
+    def lista_volutarios_disponibles(self):
+        mi_lat_long = funciones.latitud_longitud(self.direccion)
+        loc = Voluntario.lista_voluntarios_disponibles()
+        lista_vol_disp = []
         for usr in loc:
-            if (funciones.haversine(miLatLong, funciones.latitudLongitud(usr[1]))) <= 10:
-                listaVolDisp = list(listaVolDisp) + [usr]
-        return listaVolDisp
+            if (funciones.haversine(mi_lat_long, funciones.latitud_longitud(usr[1]))) <= 10:
+                lista_vol_disp = list(lista_vol_disp) + [usr]
+        return lista_vol_disp
 
-    def pedirAyuda(self, usr_voluntario):
+    def pedir_ayuda(self, usr_voluntario):
         try:
             dao = DAO()
             sql = f"UPDATE voluntario SET peticionAyuda = '{self.usuario}' WHERE usuario = '{usr_voluntario}';"
-            dao.insertarOActualizar(sql)
+            dao.insertar_o_actualizar(sql)
         except Exception as e:
             print(e)
 
     @staticmethod
-    def mostrarDatosVoluntario(ayudante):
+    def mostrar_datos_voluntario(ayudante):
         try:
             dao = DAO()
             sql = f"SELECT nombre, apellido, celular FROM voluntario WHERE usuario = '{ayudante}'"
-            datos = dao.recuperarRegistro(sql)
+            datos = dao.recuperar_registro(sql)
             print(
                 '\nDatos del voluntario para que pueda comunicarse:\n'
                 'Nombre:', datos[0], '\n'
@@ -100,18 +102,18 @@ class Abuelo:
         except Exception as e:
             print(e)
 
-    def actualizarPedido(self):
+    def actualizar_pedido(self):
         try:
             dao = DAO()
             sql = f"SELECT ayudante FROM abuelo WHERE usuario = '{self.usuario}';"
-            ayudante = dao.recuperarRegistro(sql)
+            ayudante = dao.recuperar_registro(sql)
             if ayudante[0] is not None and ayudante[0] != '0':
                 os.system('clear')
                 print(
                     '\n¡ATENCION! han respondido a su petición de ayuda:\n'
                     f'El usuario {ayudante[0]} ha aceptado su peticion de ayuda.'
                 )
-                self.mostrarDatosVoluntario(ayudante[0])
+                self.mostrar_datos_voluntario(ayudante[0])
                 return 'aceptado'
             elif ayudante[0] == '0':
                 os.system('clear')
@@ -124,13 +126,13 @@ class Abuelo:
             print(e)
 
     # UNA VEZ HECHO Y COMPLETADO EL PEDIDO LIMPIA EL AYUDANTE
-    def ayudaCompletadaORechazada(self):
+    def ayuda_completada_o_rechazada(self):
         try:
             dato = 'NULL'
             dao = DAO()
             sql = "UPDATE abuelo SET ayudante = {0} WHERE usuario = '{1}';"
             sql = sql.format(str(dato), self.usuario)
-            dao.insertarOActualizar(sql)
+            dao.insertar_o_actualizar(sql)
         except Exception as e:
             print(e)
 
@@ -140,19 +142,19 @@ class Abuelo:
         try:
             dao = DAO()
             sql = f"SELECT contra FROM abuelo WHERE usuario='{usuario}';"
-            contraRecuperada = dao.recuperarRegistro(sql)
-            contraMysql = bytes((contraRecuperada[0]))
-            return funciones.verificarContra(contra, contraMysql)
+            contra_recuperada = dao.recuperar_registro(sql)
+            contra_mysql = bytes((contra_recuperada[0]))
+            return funciones.verificar_contra(contra, contra_mysql)
         except Exception as e:
             print(e)
             pass
 
     @staticmethod
-    def verificar_usuarioDisponible(usuario):
+    def verificar_usuario_disponible(usuario):
         try:
             dao = DAO()
             sql = "SELECT usuario FROM abuelo;"
-            lista_usr = dao.recuperarRegistro(sql)
+            lista_usr = dao.recuperar_registro(sql)
             verif = True
             if lista_usr is not None:
                 for usr in lista_usr:
