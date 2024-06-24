@@ -1,7 +1,7 @@
 import threading
 import time
-from BACK_END.abuelo import Abuelo
-from UI import funciones
+from back_end.abuelo import Abuelo
+from ui import funciones
 import os
 
 

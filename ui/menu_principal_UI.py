@@ -1,6 +1,6 @@
-from BACK_END.abuelo import Abuelo
-from BACK_END.voluntario import Voluntario
-from UI import menu_abuelo_UI, menu_voluntario_UI, voluntario_UI, abuelo_UI
+from back_end.abuelo import Abuelo
+from back_end.voluntario import Voluntario
+from ui import menu_abuelo_UI, menu_voluntario_UI, voluntario_UI, abuelo_UI
 import getpass
 import os
 import time

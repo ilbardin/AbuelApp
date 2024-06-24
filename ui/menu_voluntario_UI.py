@@ -1,5 +1,5 @@
-from BACK_END.voluntario import Voluntario
-from UI import voluntario_UI
+from back_end.voluntario import Voluntario
+from ui import voluntario_UI
 import os
 
 

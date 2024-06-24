@@ -1,5 +1,5 @@
-from BACK_END.voluntario import Voluntario
-from UI import funciones
+from back_end.voluntario import Voluntario
+from ui import funciones
 import os
 import time
 

@@ -1,7 +1,7 @@
 import os
-from DB.conexion import DAO
-from BACK_END.voluntario import Voluntario
-from UI import funciones
+from db.conexion import DAO
+from back_end.voluntario import Voluntario
+from ui import funciones
 
 
 class Abuelo:
@@ -30,7 +30,7 @@ class Abuelo:
         except Exception as e:
             print(e)
 
-    #  UI PARA INGRESAR NUEVOS ABUELOS
+    #  ui PARA INGRESAR NUEVOS ABUELOS
     def resgistrarse(self):
         # noinspection PyBroadException
         try:

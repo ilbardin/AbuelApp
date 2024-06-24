@@ -1,5 +1,5 @@
-from DB.conexion import DAO
-from UI import funciones
+from db.conexion import DAO
+from ui import funciones
 
 
 class Voluntario:

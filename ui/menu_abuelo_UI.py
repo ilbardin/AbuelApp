@@ -1,5 +1,5 @@
-from UI import abuelo_UI
-from BACK_END.abuelo import Abuelo
+from ui import abuelo_UI
+from back_end.abuelo import Abuelo
 import os
 
 
