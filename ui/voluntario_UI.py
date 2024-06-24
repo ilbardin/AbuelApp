@@ -5,7 +5,7 @@ import time
 
 
 # PIDE LOS DATOS PARA EL REGISTRO Y LO RETORNA EN UNA LISTA
-def Registro():
+def registro():
     usr = funciones.verificar_usuario()
 
     if Voluntario.verificar_usuario_disponible(usr):
@@ -19,20 +19,20 @@ def Registro():
         os.system('clear')
         print('Este nombre de usuario esta ocupado, elija otro.')
         time.sleep(1)
-        return Registro()
+        return registro()
     lista_usr = [usr, contra, nombre, apellido, celular, direccion, sexo]
     return lista_usr
 
 
 # VE LOS DATOS DEL VOLUNTARIO
-def verMiPerfil(voluntario):
+def ver_mi_perfil(voluntario):
     print('Sus datos son los siguientes:\n')
     voluntario.mostrar_datos()
     input('\nOprima cualquier tecla para continuar...')
 
 
 # MODIFICA LOS DATOS QUE QUIERA EL VOLUNTARIO
-def modificarPerfil(voluntario):
+def modificar_perfil(voluntario):
     resp = ''
     while resp != '5':
         os.system('clear')
@@ -79,7 +79,7 @@ def recargar(voluntario):
 
 
 # ELIMINA EL USUARIO DE LA BASE DE DATOS
-def eliminarUsuario(voluntario):
+def eliminar_usuario(voluntario):
     if funciones.menu_confirmacion('¿Seguro que quiere eliminar su cuenta?'):
         voluntario.eliminarme()
         return True
@@ -88,7 +88,7 @@ def eliminarUsuario(voluntario):
 
 
 # MUESTRA POR PANTALLA SI ESTA DISPONIBLE
-def mensajeDisponibilidad(voluntario):
+def mensaje_disponibilidad(voluntario):
     if voluntario.mostrar_disponibilidad() == 'Disponible':
         return '*Su estado es: Disponible. Podria recibir peticiones de ayuda.'
     else:
@@ -96,7 +96,7 @@ def mensajeDisponibilidad(voluntario):
 
 
 # CAMBIA LA DISPONIBILIDAD DEL USUARIO
-def cambiarDisponibilidad(voluntario):
+def cambiar_disponibilidad(voluntario):
     voluntario.cambiar_disponibilidad()
     print(f'Su disponibilidad cambio a: {voluntario.mostrar_disponibilidad()}')
     input('Oprima cualquier tecla para continuar...')

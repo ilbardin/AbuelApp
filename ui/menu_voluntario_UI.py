@@ -21,7 +21,7 @@ class MenuVoluntario:
             print("Opción 4:\t Recargar para verificar si hay peticiones de ayuda")
             print("Opción 5:\t Eliminar usuario")
             print("Opción 6:\t Salir\n")
-            print(voluntario_UI.mensajeDisponibilidad(self.voluntario))
+            print(voluntario_UI.mensaje_disponibilidad(self.voluntario))
             self.opcion = input("\nSeleccione opción: ")
 
             if self.opcion.isnumeric():
@@ -31,18 +31,18 @@ class MenuVoluntario:
                     function()
 
     def opcion1(self):
-        voluntario_UI.verMiPerfil(self.voluntario)
+        voluntario_UI.ver_mi_perfil(self.voluntario)
 
     def opcion2(self):
-        voluntario_UI.modificarPerfil(self.voluntario)
+        voluntario_UI.modificar_perfil(self.voluntario)
 
     def opcion3(self):
-        voluntario_UI.cambiarDisponibilidad(self.voluntario)
+        voluntario_UI.cambiar_disponibilidad(self.voluntario)
 
     def opcion4(self):
         voluntario_UI.recargar(self.voluntario)
 
     def opcion5(self):
-        elim = voluntario_UI.eliminarUsuario(self.voluntario)
+        elim = voluntario_UI.eliminar_usuario(self.voluntario)
         if elim:
             self.opcion = '6'

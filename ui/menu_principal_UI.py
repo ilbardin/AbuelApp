@@ -93,7 +93,7 @@ class MenuPrincipal:
             menu_abuelo = menu_abuelo_UI.MenuAbuelo(lista[0])
             menu_abuelo.imprimir_menu()
         elif resp == '2':
-            lista = voluntario_UI.Registro()
+            lista = voluntario_UI.registro()
             voluntario = Voluntario(lista[0], lista[1], lista[2], lista[3], lista[4], lista[5], lista[6])
             voluntario.resgistrarse()
             voluntario = None
