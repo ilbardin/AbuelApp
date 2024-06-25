@@ -31,7 +31,7 @@ class Abuelo:
             print(e)
 
     #  ui PARA INGRESAR NUEVOS ABUELOS
-    def resgistrarse(self):
+    def registrar_abuelo(self):
         # noinspection PyBroadException
         try:
             dao = DAO()

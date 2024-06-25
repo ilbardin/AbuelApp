@@ -81,7 +81,7 @@ def recargar(voluntario):
 # ELIMINA EL USUARIO DE LA BASE DE DATOS
 def eliminar_usuario(voluntario):
     if funciones.menu_confirmacion('¿Seguro que quiere eliminar su cuenta?'):
-        voluntario.eliminarme()
+        voluntario.eliminar_voluntario()
         return True
     else:
         return False

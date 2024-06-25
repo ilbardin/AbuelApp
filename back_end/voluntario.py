@@ -30,7 +30,7 @@ class Voluntario:
         except Exception as e:
             print(e)
 
-    def resgistrarse(self):
+    def registrar_voluntario(self):
         # noinspection PyBroadException
         try:
             dao = DAO()
@@ -85,7 +85,7 @@ class Voluntario:
         except Exception as e:
             print(e)
 
-    def eliminarme(self):
+    def eliminar_voluntario(self):
         try:
             dao = DAO()
             sql = "DELETE FROM voluntario WHERE usuario = '{0}';"

@@ -96,7 +96,7 @@ def solicitar_ayuda(abuelo):
 # ELIMINA SU USUARIO DE LA BASE DE DATOS
 def eliminar_usuario(abuelo):
     if funciones.menu_confirmacion('¿Seguro que quiere eliminar su cuenta?'):
-        abuelo.eliminarme()
+        abuelo.eliminar_voluntario()
         return True
     else:
         return False
